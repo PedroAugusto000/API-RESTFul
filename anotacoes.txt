@@ -1,0 +1,77 @@
+WebService: Um webservice é tipo um correio digital que troca ideia entre sistemas diferentes pela internet
+
+Ele recebe um pedido (tipo: "me manda os dados do usuário tal") e responde com os dados certinho, na moral. E o papo é sempre num formato padrãozão, tipo JSON ou XML, pra todo mundo entender, mesmo que os sistemas sejam diferentes.
+
+Tem uns tipos mais famosinhos, tipo:
+
+- REST (mais moderninho, suave, usa HTTP que nem site normal)
+
+- SOAP (mais chato, cheio das formalidade, mas firmeza pra umas empresa mais zicada que curte segurança e padrão)
+
+MÉTODOS
+GET - POST - DELETE - PUT
+
+	//Dependendo do método que a gente usar ele vai ser redirecionado para um canto específico, use o PostMan para testar
+	@GetMapping //Ele herdou a configuração da classe acima, por isso não foi mapeado
+	public String get() { //Usado só para ver algo sem mudar nada
+		return "Get Spring Boot";
+	}
+	
+	@PostMapping() //Geralmente usado para formulário, passa os parâmetros no corpo da requisição, diferente do GET que passa na URL
+	public String post() { //Mudar dados pro servidor
+		return "Post Spring Boot";
+	}
+	
+	@PutMapping() //Atualizar dados, mas funciona igual o POST
+	public String put() { //Atualizar tudo, substituir
+		return "Put Spring Boot";
+	}
+	
+	@DeleteMapping() //Deletar registros
+	public String delete() {
+		return "Delete Spring Boot";
+	}
+	
+	------------------------------------------------------------------------------------------------------------
+	
+		@GetMapping("/login") //Não é recomendado passar senha e login por esse método, use o POST
+	public String login(@RequestParam("login") String login, @RequestParam("senha")String senha) {
+		return "login" + login + ", senha: " + senha;
+	}
+	
+	//Testa esse método com http://localhost:8080/login?login=ricardo&senha=abc
+	
+	------------------------------------------------------------------------------------------------------------
+	
+	PASSANDO E LIGANDO MÉTODO COM O PATH VARIABLE
+	
+		@GetMapping("/login/{login}/senha/{senha}")
+	public String login(@PathVariable("login") String login, @PathVariable("senha")String senha) {
+		return "login: " + login + ", senha: " + senha;
+	}
+	
+	//Testa com a URL http://localhost:8080/login/ricardo/senha/123
+	
+	------------------------------------------------------------------------------------------------------------
+	
+		@GetMapping("/carros/{id}")
+	public String getCarroById(@PathVariable("id") Long id) {
+		return "Carro by id " + id;
+	}
+	
+	@GetMapping("/carros/tipo/{tipo}")
+	public String getCarroByTipo(@PathVariable("tipo") String tipo) {
+		return "Lista de Carros " + tipo;
+	}
+	
+	//Testa com:
+	//http://localhost:8080/carros/tipo/1
+	//http://localhost:8080/carros/1
+	
+	------------------------------------------------------------------------------------------------------------
+	
+	
+}
+	
+	
+	
