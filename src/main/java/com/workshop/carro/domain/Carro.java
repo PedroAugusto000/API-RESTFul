@@ -1,9 +1,22 @@
 package com.workshop.carro.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity //(name = "carro") //Se o nome dar tabela for igual, igual no nosso caso, não precisa informar 
 public class Carro {
 	
+	@Id //Chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremento do ID
 	private Long id;
+	
+	//Se lá no banco o nome for diferente: @Column(name = "nome")
 	private String nome;
+	
+	public Carro() {}
 	
 	public Carro(Long id, String nome) {
 		this.id = id;
