@@ -11,6 +11,9 @@ Tem uns tipos mais famosinhos, tipo:
 MÉTODOS
 GET - POST - DELETE - PUT
 
+DIVISÃO PROJETO
+domain - criar entidades
+
 	//Dependendo do método que a gente usar ele vai ser redirecionado para um canto específico, use o PostMan para testar
 	@GetMapping //Ele herdou a configuração da classe acima, por isso não foi mapeado
 	public String get() { //Usado só para ver algo sem mudar nada
@@ -70,8 +73,16 @@ GET - POST - DELETE - PUT
 	
 	------------------------------------------------------------------------------------------------------------
 	
+		@PostMapping("/login")
+	public String login(@RequestParam("login") String login, @RequestParam("senha")String senha) {
+		return "Login " + login + ", senha: " + senha;
+	}
 	
+	//Testa no PostMan usando o método POST para enviar junto com os valores das variáveis login e senha
 }
+
+	------------------------------------------------------------------------------------------------------------
+
 	
 	
 	
