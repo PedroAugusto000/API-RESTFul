@@ -83,6 +83,26 @@ domain - criar entidades
 
 	------------------------------------------------------------------------------------------------------------
 
+	@PostMapping
+	public String post(@RequestBody Carro carro) { //RequestBody converte o json carro para o objeto carro
+		Carro c = service.save(carro);
+		
+		return "Carro  salvo com sucesso: " + c.getId();
+	}
+
+	// Para testar vá no PostMan -> insere a url do http://localhost:8080/api/v1/carros -> Em "Headers" adiciona a key para "Content-Type" e o Value para "application/json" -> Agora vai na aba do body e insere esse valor:
+
+{
+    "nome": "Golf MK3 1993",
+    "tipo": "classicos"
+}
+
+Dá um send e verifica se apareceu a mensagem: Carro  salvo com sucesso: 34
+
+	------------------------------------------------------------------------------------------------------------
+	
+	Testa o método PUT da mesma forma
+
 	
 	
 	
