@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.workshop.carro.domain.Carro;
 import com.workshop.carro.domain.CarroService;
+import com.workshop.carro.domain.dto.CarroDTO;
 
 @RestController
 @RequestMapping ("/api/v1/carros") //Padrão bastante comum para criar API REST
@@ -28,14 +29,14 @@ public class CarroController {
 	private CarroService service;
 	
 	@GetMapping()
-	public ResponseEntity<Iterable<Carro>> get() {
+	public ResponseEntity<List<CarroDTO>> get() {
 		return ResponseEntity.ok(service.getCarros()); //Atalho p fazer a mesma coisa abaixo
 		//return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity get(@PathVariable("id") Long id) {
-		Optional <Carro> carro = service.getCarroById(id);
+		Optional <CarroDTO> carro = service.getCarroById(id);
 		
 		//Expressão lambda
 		return carro.map(c -> ResponseEntity.ok(c))
@@ -55,8 +56,8 @@ public class CarroController {
 	}	
 	
 	@GetMapping("/tipo/{tipo}")
-	public ResponseEntity CarrosByTipo(@PathVariable("tipo") String tipo) {
-		List<Carro> carros = service.getCarroByTipo(tipo);
+	public ResponseEntity<List<CarroDTO>> getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		List<CarroDTO> carros = service.getCarroByTipo(tipo);
 		
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
@@ -67,14 +68,6 @@ public class CarroController {
 	public String post(@RequestBody Carro carro) { //RequestBody converte o json carro para o objeto carro
 		Carro c = service.insert(carro);
 		return "Carro  salvo com sucesso: " + c.getId();
-	}
-	
-	@PutMapping("/{id}")
-	public String put(@PathVariable("id")Long id, @RequestBody Carro carro) { 
-		
-		Carro c = service.update(carro, id);
-		
-		return "Carro  atualizado com sucesso: " + c.getId();
 	}
 	
 	@DeleteMapping("/{id}")
