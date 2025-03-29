@@ -14,6 +14,34 @@ GET - POST - DELETE - PUT
 DIVISÃO PROJETO
 domain - criar entidades
 
+STATUS CODES HTTP
+1xx - Informativo
+100 Continue: Pode mandar o resto...
+101 Switching Protocols: Tô mudando o esquema, aguarde
+
+2xx - Sucesso
+200: OK
+201 Created: Criado
+204 No Content: Tudo tranquilo, mas não tem nada pra mostrar
+
+3xx - Redirecionamento
+301 Moved Permanently: Agora tá em outro canto
+302: Em outro lugar, por enquanto
+304: Não mudou, usa o que tu já tem
+
+4xx - Erro do cliente
+400 Bad Request: Pedido zuado, vê aí o que tu mandou.
+401 Unauthorized: Nem vem, tu não tem permissão.
+403 Forbidden: Tu até tá logado, mas não pode ver isso aqui.
+404 Not Found: Essa porra não existe, foi mal.
+429 Too Many Requests: Devagar aí, cê tá pedindo demais!
+
+5xx - Erro do servidor
+500 Internal Server Error: Deu ruim aqui dentro, nem sei o que foi.
+502 Bad Gateway: A resposta veio errada de outro canto.
+503 Service Unavailable: Tamo fora do ar, tenta depois.
+504 Gateway Timeout: O outro servidor não respondeu a tempo.
+
 	//Dependendo do método que a gente usar ele vai ser redirecionado para um canto específico, use o PostMan para testar
 	@GetMapping //Ele herdou a configuração da classe acima, por isso não foi mapeado
 	public String get() { //Usado só para ver algo sem mudar nada
