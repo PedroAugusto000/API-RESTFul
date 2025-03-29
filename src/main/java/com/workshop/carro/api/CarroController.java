@@ -1,5 +1,6 @@
 package com.workshop.carro.api;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.workshop.carro.domain.Carro;
 import com.workshop.carro.domain.CarroService;
@@ -65,14 +67,39 @@ public class CarroController {
 	}	
 	
 	@PostMapping
-	public String post(@RequestBody Carro carro) { //RequestBody converte o json carro para o objeto carro
-		Carro c = service.insert(carro);
-		return "Carro  salvo com sucesso: " + c.getId();
+	public ResponseEntity post(@RequestBody Carro carro) {
+		
+		try {
+			CarroDTO c = service.insert(carro);
+			
+	        URI location = getUri(c.getId());
+			return ResponseEntity.created(location).build();
+		} catch (Exception ex){
+			return ResponseEntity.badRequest().build();
+		}
 	}
 	
-	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") Long id) {
-	    Carro c = service.delete(id);
-	    return "Carro deletado com sucesso: " + c.getId();
-	}
+    private URI getUri(Long id) {
+        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(id).toUri();
+    }
+	
+    @PutMapping("/{id}")
+    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+
+        carro.setId(id);
+
+        CarroDTO c = service.update(carro, id);
+
+        return c != null ?
+                ResponseEntity.ok(c) :
+                ResponseEntity.notFound().build();
+    }
+	
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        service.delete(id);
+
+        return ResponseEntity.ok().build();
+    }
 }
