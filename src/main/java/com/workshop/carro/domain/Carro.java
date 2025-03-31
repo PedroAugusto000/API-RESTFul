@@ -19,6 +19,9 @@ public class Carro {
 	//Se lá no banco o nome for diferente: @Column(name = "nome")
 	private String nome;
 	private String tipo;
-	
-	
+	private String descricao;
+	private String urlFoto;
+	private String urlVideo;
+	private String latitude;
+	private String longitude;
 }

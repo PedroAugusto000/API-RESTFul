@@ -19,7 +19,9 @@ public class CarroService {
 	private CarroRepository rep;
 	
 	public List<CarroDTO> getCarros() {
-		List<Carro> carros = rep.findAll();
+		
+	    return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
+	
 
 		//Forma 1 expressão lambda: //List<CarroDTO> list = carros.stream().map(c -> new CarroDTO(c)).collect(Collectors.toList());
 		//Forma 2 expressão lambda: //List<CarroDTO> list = carros.stream().map(CarroDTO::new).collect(Collectors.toList());
@@ -32,7 +34,6 @@ public class CarroService {
 //		return list;
 		
 		//Melhor código
-		return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 	
 	public Optional<CarroDTO> getCarroById(Long id) {
@@ -59,6 +60,11 @@ public class CarroService {
             // Copiar as propriedades
             db.setNome(carro.getNome());
             db.setTipo(carro.getTipo());
+            db.setDescricao(carro.getDescricao());
+            db.setUrlFoto(carro.getUrlFoto());
+            db.setUrlVideo(carro.getUrlVideo());
+            db.setLatitude(carro.getLatitude());
+            db.setLongitude(carro.getLongitude());
             System.out.println("Carro id " + db.getId());
 
             // Atualiza o carro
